@@ -13,7 +13,7 @@ PROJECT_ROOT="$SCRIPT_DIR/.."
 
 #-- Setup options
 OPT=$1
-CLANG_FORMAT_OPTS=()
+CLANG_FORMAT_OPTS=("--dry-run")
 SOURCE_FILES=()
 while [[ -n "$OPT" ]]; do
     case "$OPT" in
@@ -24,10 +24,15 @@ while [[ -n "$OPT" ]]; do
             echo "== Options =="
             echo " --help|-h: Show this help information and then exit."
             echo " --warnings-as-errors: Treat lint warnings as errors."
+            echo " --fix: Fix any fixable issues."
             echo ""
             echo "== Arguments =="
             echo " FILE: The file or files to lint. If not provided then all files are linted."
             exit 0
+        ;;
+        --fix)
+            CLANG_FORMAT_OPTS=${CLANG_FORMAT_OPTS[@]/--dry-run}
+            CLANG_FORMAT_OPTS+="-i"
         ;;
         --warnings-as-errors)
             CLANG_FORMAT_OPTS+="-Werror"
@@ -53,7 +58,7 @@ else
     echo "Linting ${#SOURCE_FILES[@]} files..."
 fi
 
-clang-format --dry-run --style=file:$PROJECT_ROOT/.clang-format ${CLANG_FORMAT_OPTS[@]} ${SOURCE_FILES[@]}
+clang-format --style=file:$PROJECT_ROOT/.clang-format ${CLANG_FORMAT_OPTS[@]} ${SOURCE_FILES[@]}
 
 ERROR_CODE=$?
 
