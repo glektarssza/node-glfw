@@ -45,7 +45,11 @@
         "rebuild:types": "npm run clean:types && npm run build:types",
         "rebuild:native": "npm run clean:native && npm run build:native"
     },
+    "dependencies": {
+        "bindings": "^1.5.0"
+    },
     "optionalDependencies": {
+        "@types/bindings": "^1.5.5",
         "@types/node": "^20.11.16"
     },
     "devDependencies": {
