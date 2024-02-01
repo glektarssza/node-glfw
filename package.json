@@ -18,6 +18,9 @@
         "url": "https://github.com/glektarssza/node-glfw"
     },
     "scripts": {},
+    "optionalDependencies": {
+        "@types/node": "^20.11.16"
+    },
     "devDependencies": {
         "@types/chai": "^4.3.11",
         "@types/mocha": "^10.0.6",
