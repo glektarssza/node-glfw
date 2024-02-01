@@ -70,14 +70,14 @@ To automatically fix any lint issues that can be fixed by ESLint/Prettier you
 can run:
 
 ```sh
-npm run lint:fix:eslint
+npm run lint:eslint:fix
 ```
 
 To automatically fix any lint issues that can be fixed by clang-format you can
 run:
 
 ```sh
-npm run lint:fix:clang-format
+npm run lint:clang-format:fix
 ```
 
 This project is configured with a `pre-commit` hook to run the above linting
