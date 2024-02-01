@@ -41,3 +41,14 @@ node_modules/
 # Caches #
 ## ESLint ##
 .eslintcache
+
+## nyc ##
+.nyc_output/
+
+# Artifacts #
+## TypeScript ##
+/lib/
+/types/
+
+## nyc ##
+coverage/
