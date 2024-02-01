@@ -5,6 +5,7 @@ const cpuCoreCount = os.cpus().length;
 const jobs = Math.floor(cpuCoreCount / 2);
 
 process.env['TS_NODE_PROJECT'] = path.resolve(__dirname, './tests/tsconfig.json');
+process.env['TS_NODE_TRANSPILE_ONLY'] = 'true';
 
 console.log(`Using ${jobs} parallel workers...`);
 
