@@ -1,0 +1,83 @@
+{
+    "name": "@glektarssza/node-glfw",
+    "description": "A NodeJS native addon which provides access to the GLFW APIs.",
+    "version": "0.0.0",
+    "license": "MIT",
+    "private": true,
+    "author": {
+        "name": "G'lek Tarssza",
+        "email": "glek@glektarssza.com",
+        "url": "https://glektarssza.com"
+    },
+    "homepage": "https://glektarssza.github.io/node-glfw",
+    "bugs": {
+        "url": "https://github.com/glektarssza/node-glfw/issues"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/glektarssza/node-glfw"
+    },
+    "scripts": {
+        "prepare": "husky",
+        "lint": "npm run lint:eslint && npm run lint:clang-format",
+        "lint:ci": "npm run lint",
+        "lint:fix": "npm run lint:eslint:fix && npm run lint:clang-format:fix",
+        "lint:eslint": "npm run lint:eslint:cache -- -- ./src/ts/ ./tests/",
+        "lint:eslint:fix": "npm run lint:eslint:base -- --fix",
+        "lint:eslint:cache": "npm run lint:eslint:base -- --cache",
+        "lint:eslint:base": "eslint --ext .ts",
+        "lint:clang-format": "npm run lint:clang-format:base -- ./src/native/",
+        "lint:clang-format:fix": "npm run lint:clang-format:base -- --fix ./src/native/",
+        "lint:clang-format:base": "./scripts/clang-format.sh",
+        "test": "mocha",
+        "test:ci": "npm run coverage",
+        "coverage": "nyc npm run test",
+        "coverage:report": "nyc report",
+        "coverage:report:html": "npm run coverage:report -- --reporter=html --report-dir=coverage",
+        "prepublishOnly": "npm run rebuild",
+        "build": "npm run build:all",
+        "build:all": "npm run build:lib && npm run build:types && npm run build:native",
+        "build:lib": "tsc --project ./src/tsconfig.json",
+        "build:types": "npm run build:lib -- --declaration --emitDeclarationOnly --declarationDir ./types/",
+        "prebuild:native": "node-gyp configure",
+        "build:native": "node-gyp build",
+        "clean": "npm run clean:all",
+        "clean:all": "npm run clean:lib && npm run clean:types && npm run clean:native",
+        "clean:lib": "rimraf ./lib/",
+        "clean:types": "rimraf ./types/",
+        "clean:native": "rimraf ./build/",
+        "rebuild": "npm run clean && npm run build",
+        "rebuild:all": "npm run clean:all && npm run build:all",
+        "rebuild:lib": "npm run clean:lib && npm run build:lib",
+        "rebuild:types": "npm run clean:types && npm run build:types",
+        "rebuild:native": "npm run clean:native && npm run build:native"
+    },
+    "dependencies": {
+        "bindings": "^1.5.0"
+    },
+    "optionalDependencies": {
+        "@types/bindings": "^1.5.5",
+        "@types/node": "^20.11.16"
+    },
+    "devDependencies": {
+        "@types/chai": "^4.3.11",
+        "@types/mocha": "^10.0.6",
+        "@types/node": "^20.11.16",
+        "@types/sinon": "^17.0.3",
+        "@typescript-eslint/eslint-plugin": "^6.20.0",
+        "@typescript-eslint/parser": "^6.20.0",
+        "chai": "^5.0.3",
+        "eslint": "^8.56.0",
+        "eslint-config-prettier": "^9.1.0",
+        "eslint-plugin-prettier": "^5.1.3",
+        "eslint-plugin-tsdoc": "^0.2.17",
+        "husky": "^9.0.10",
+        "mocha": "^10.2.0",
+        "node-gyp": "^10.0.1",
+        "nyc": "^15.1.0",
+        "sinon": "^17.0.1",
+        "ts-node": "^10.9.2",
+        "tsconfig-paths": "^4.2.0",
+        "typescript": "^5.3.3"
+    }
+}

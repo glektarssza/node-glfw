@@ -21,29 +21,67 @@ for information about how to get setup for contributing.
 
 Getting setup to develop is fairly straight forward. Follow these steps:
 
-1. Run `npm install` to install required dependencies.
+1. Ensure you meet the requirements for using `node-gyp` locally.
+2. Ensure you have a static library version of GLFW.
+3. Set the following environment variables:
+
+```sh
+export npm_config_glfw="PATH_TO_GLFW_INSTALL_ROOT"
+```
+
+4. Run `npm install` to install required dependencies and build the native addon
+   for the first time.
 
 That's about it!
 
 ### Code Styling ###
 
 This project uses a combination of [Husky](https://www.npmjs.com/package/husky),
-[ESLint](https://www.npmjs.com/package/eslint), and
-[Prettier](https://www.npmjs.com/package/prettier) for code styling. To run
-ESLint you can use:
+[ESLint](https://www.npmjs.com/package/eslint),
+[Prettier](https://www.npmjs.com/package/prettier), and
+[clang-format](https://clang.llvm.org/docs/ClangFormat.html) for code styling.
+
+To run ESLint/Prettier/clang-format you can use:
 
 ```sh
 npm run lint
 ```
 
-To automatically fix any lint issues that can be fixed you can run:
+To run ESLint/Prettier you can use:
+
+```sh
+npm run lint:eslint
+```
+
+To run clang-format you can use:
+
+```sh
+npm run lint:clang-format
+```
+
+To automatically fix any lint issues that can be fixed by
+ESLint/Prettier/clang-format you can run:
 
 ```sh
 npm run lint:fix
 ```
 
-This project is configured with a `pre-commit` hook to run the linting tool and
-abort a Git commit if it finds issues. You can bypass this with the
+To automatically fix any lint issues that can be fixed by ESLint/Prettier you
+can run:
+
+```sh
+npm run lint:eslint:fix
+```
+
+To automatically fix any lint issues that can be fixed by clang-format you can
+run:
+
+```sh
+npm run lint:clang-format:fix
+```
+
+This project is configured with a `pre-commit` hook to run the above linting
+scripts and abort a Git commit if it finds issues. You can bypass this with the
 `--no-verify` flag:
 
 ```sh
@@ -64,7 +102,8 @@ To run unit tests use:
 npm test
 ```
 
-All existing tests should pass before you submit a pull request.
+All existing tests should pass and any new code should have appropriate unit
+tests written for it before you submit a pull request.
 
 ## License ##
 

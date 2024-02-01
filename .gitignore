@@ -37,3 +37,21 @@ tags
 # Packages ##
 ## NodeJS ##
 node_modules/
+
+# Caches #
+## ESLint ##
+.eslintcache
+
+## nyc ##
+.nyc_output/
+
+## node-gyp ##
+build/
+
+# Artifacts #
+## TypeScript ##
+/lib/
+/types/
+
+## nyc ##
+coverage/
