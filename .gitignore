@@ -45,6 +45,9 @@ node_modules/
 ## nyc ##
 .nyc_output/
 
+## node-gyp ##
+build/
+
 # Artifacts #
 ## TypeScript ##
 /lib/
