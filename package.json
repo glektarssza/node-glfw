@@ -18,7 +18,32 @@
         "url": "https://github.com/glektarssza/node-glfw"
     },
     "scripts": {
-        "prepare": "husky"
+        "prepare": "husky",
+        "lint:base": "eslint --ext .ts",
+        "lint:cache": "npm run lint:base -- --cache",
+        "lint": "npm run lint:cache -- -- ./src/ts/ ./tests/",
+        "lint:ci": "npm run lint -- -- -- ./src/ts/ ./tests/",
+        "test": "mocha",
+        "test:ci": "npm run coverage",
+        "coverage": "nyc npm run test",
+        "coverage:report": "nyc report",
+        "coverage:report:html": "npm run coverage:report -- --reporter=html --report-dir=coverage",
+        "prepublishOnly": "npm run rebuild",
+        "build": "npm run build:all",
+        "build:all": "npm run build:lib && npm run build:types && npm run build:native",
+        "build:lib": "tsc --project ./src/tsconfig.json",
+        "build:types": "npm run build:lib -- --declaration --emitDeclarationOnly --declarationDir ./types/",
+        "build:native": "echo 'TODO: build:native'",
+        "clean": "npm run clean:all",
+        "clean:all": "npm run clean:lib && npm run clean:types && npm run clean:native",
+        "clean:lib": "rimraf ./lib/",
+        "clean:types": "rimraf ./types/",
+        "clean:native": "echo 'TODO: clean:native'",
+        "rebuild": "npm run clean && npm run build",
+        "rebuild:all": "npm run clean:all && npm run build:all",
+        "rebuild:lib": "npm run clean:lib && npm run build:lib",
+        "rebuild:types": "npm run clean:types && npm run build:types",
+        "rebuild:native": "npm run clean:native && npm run build:native"
     },
     "optionalDependencies": {
         "@types/node": "^20.11.16"
