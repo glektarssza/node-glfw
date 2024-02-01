@@ -11,9 +11,13 @@ SCRIPT_DIR=$( cd -P "$( dirname "$SCRIPT_SOURCE" )" >/dev/null 2>&1 && pwd )
 #-- Import Husky stuff
 source "$SCRIPT_DIR/_/husky.sh"
 
+#-- Setup paths
+PROJECT_ROOT="$SCRIPT_DIR/.."
+
 #-- What files are staged to be committed?
 IFS=" "
-STAGED_FILES=( $(git diff --name-only --staged --diff-filter=d | sed -ne '/\.\(ts\)/p' | xargs) )
+STAGED_TS_FILES=( $(git diff --name-only --staged --diff-filter=d $PROJECT_ROOT/src/ts/ | sed -ne '/\.\(ts\)/p' | xargs) )
+STAGED_NATIVE_FILES=( $(git diff --name-only --staged --diff-filter=d $PROJECT_ROOT/src/native/ | sed -ne '/\.\(ts\)/p' | xargs) )
 unset IFS
 
 if [[ ${#STAGED_FILES[@]} == 0 ]]; then
@@ -23,7 +27,16 @@ else
     echo "Linting ${#STAGED_FILES[@]} files..."
 fi
 
-npm run lint:base -- ${STAGED_FILES[@]}
+$PROJECT_ROOT/scripts/eslint.sh ${STAGED_TS_FILES[@]}
+
+ERROR_CODE=$?
+
+if [[ $ERROR_CODE != 0 ]]; then
+    echo "Linting failed!"
+    exit $ERROR_CODE
+fi
+
+$PROJECT_ROOT/scripts/clang-format.sh ${STAGED_NATIVE_FILES[@]}
 
 ERROR_CODE=$?
 
