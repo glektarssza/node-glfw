@@ -37,7 +37,7 @@
         "prepublishOnly": "npm run rebuild",
         "build": "npm run build:all",
         "build:all": "npm run build:lib && npm run build:types && npm run build:native",
-        "build:lib": "tsc --project ./src/tsconfig.json",
+        "build:lib": "tsc --project ./src/ts/tsconfig.json",
         "build:types": "npm run build:lib -- --declaration --emitDeclarationOnly --declarationDir ./types/",
         "prebuild:native": "node-gyp configure",
         "build:native": "node-gyp build",
