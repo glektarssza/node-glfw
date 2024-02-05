@@ -17,6 +17,9 @@
         "type": "git",
         "url": "https://github.com/glektarssza/node-glfw"
     },
+    "main": "./lib/index.js",
+    "module": "./lib/index.js",
+    "types": "./types/index.d.ts",
     "scripts": {
         "prepare": "husky",
         "lint": "npm run lint:eslint && npm run lint:clang-format",

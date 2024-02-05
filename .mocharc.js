@@ -1,3 +1,4 @@
+//-- NodeJS
 const os = require('node:os');
 const path = require('node:path');
 
@@ -19,6 +20,6 @@ module.exports = {
     reporter: 'spec',
     extension: ['ts'],
     recursive: true,
-    spec: './tests/**/*.spec.ts',
-    require: ['tsconfig-paths/register', 'ts-node/register']
+    spec: './tests/**/*.spec.*',
+    import: ['ts-node/esm-register']
 };
