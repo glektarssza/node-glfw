@@ -1,12 +1,10 @@
 {
     "extends": "../tsconfig.json",
     "compilerOptions": {
-        "allowImportingTsExtensions": true,
         "baseUrl": ".",
-        "noEmit": true,
         "paths": {
             "@src": [
-                "../src/ts"
+                "../src/ts/index"
             ],
             "@src/*": [
                 "../src/ts/*"
