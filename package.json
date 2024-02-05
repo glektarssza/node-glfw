@@ -42,8 +42,11 @@
         "build:all": "npm run build:lib && npm run build:types && npm run build:native",
         "build:lib": "tsc --project ./src/ts/tsconfig.json --outDir ./lib/",
         "build:types": "tsc --project ./src/ts/tsconfig.json --declaration --emitDeclarationOnly --declarationDir ./types/",
-        "prebuild:native": "node-gyp configure",
-        "build:native": "node-gyp build",
+        "build:native": "npm run build:native:release",
+        "prebuild:native:base": "node-gyp configure",
+        "build:native:base": "node-gyp build",
+        "build:native:debug": "npm run build:native:base -- --debug",
+        "build:native:release": "npm run build:native:base",
         "clean": "npm run clean:all",
         "clean:all": "npm run clean:lib && npm run clean:types && npm run clean:native",
         "clean:lib": "rimraf ./lib/",
@@ -79,8 +82,7 @@
         "node-gyp": "^10.0.1",
         "nyc": "^15.1.0",
         "sinon": "^17.0.1",
-        "ts-node": "^10.9.2",
-        "tsconfig-paths": "^4.2.0",
+        "tsx": "^4.7.0",
         "typescript": "^5.3.3"
     }
 }
