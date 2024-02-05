@@ -21,5 +21,5 @@ module.exports = {
     extension: ['ts'],
     recursive: true,
     spec: './tests/**/*.spec.*',
-    import: ['ts-node/esm-register']
+    require: ['ts-node/register']
 };
