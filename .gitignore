@@ -52,6 +52,7 @@ build/
 ## TypeScript ##
 /lib/
 /types/
+*.tsbuildinfo
 
 ## nyc ##
 coverage/
