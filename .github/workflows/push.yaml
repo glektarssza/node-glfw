@@ -1,0 +1,83 @@
+name: Push
+on:
+  push:
+    branches:
+      - main
+    tags-ignore:
+      - '*'
+jobs:
+  lint:
+    name: Lint
+    permissions:
+      contents: read
+      checks: write
+    runs-on: ubuntu-latest
+    steps:
+      - id: checkout-repository
+        name: Checkout repository
+        uses: actions/checkout@v4
+      - id: setup-nodejs
+        name: Setup NodeJS
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+          cache-dependency-path: package-lock.json
+      - id: lint
+        name: Lint
+        run: npm run lint:ci
+  build:
+    name: Build
+    permissions:
+      contents: read
+    runs-on: ${{matrix.build_os}}
+    strategy:
+      fail-fast: true
+      matrix:
+        build_os:
+          - ubuntu-latest
+          - macos-latest
+          - windows-latest
+    steps:
+      - id: checkout-repository
+        name: Checkout repository
+        uses: actions/checkout@v4
+      - id: setup-nodejs
+        name: Setup NodeJS
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+          cache-dependency-path: package-lock.json
+      - id: build
+        name: Build
+        run: npm run build
+  test:
+    name: Test
+    permissions:
+      contents: read
+    runs-on: ${{matrix.build_os}}
+    strategy:
+      fail-fast: true
+      matrix:
+        build_os:
+          - ubuntu-latest
+          - macos-latest
+          - windows-latest
+    steps:
+      - id: checkout-repository
+        name: Checkout repository
+        uses: actions/checkout@v4
+      - id: setup-nodejs
+        name: Setup NodeJS
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+          cache-dependency-path: package-lock.json
+      - id: build-native-addon
+        name: Build naive addon
+        run: npm run build:native:debug
+      - id: test
+        name: Test
+        run: npm run test:ci
