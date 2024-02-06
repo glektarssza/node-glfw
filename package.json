@@ -32,6 +32,7 @@
         "lint:clang-format": "npm run lint:clang-format:base -- ./src/native/",
         "lint:clang-format:fix": "npm run lint:clang-format:base -- --fix ./src/native/",
         "lint:clang-format:base": "./scripts/clang-format.sh",
+        "pretest": "npm run build:native:debug",
         "test": "mocha",
         "test:ci": "npm run coverage",
         "coverage": "nyc npm run test",
@@ -56,7 +57,9 @@
         "rebuild:all": "npm run clean:all && npm run build:all",
         "rebuild:lib": "npm run clean:lib && npm run build:lib",
         "rebuild:types": "npm run clean:types && npm run build:types",
-        "rebuild:native": "npm run clean:native && npm run build:native"
+        "rebuild:native": "npm run clean:native && npm run build:native",
+        "rebuild:native:debug": "npm run clean:native && npm run build:native:debug",
+        "rebuild:native:release": "npm run clean:native && npm run build:native:release"
     },
     "dependencies": {
         "bindings": "^1.5.0"
