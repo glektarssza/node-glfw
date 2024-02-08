@@ -1,0 +1,77 @@
+name: Build GLFW
+on:
+  workflow_call:
+    inputs:
+      build-os:
+        required: true
+        type: string
+        description: |
+          The type of operating systme to build on. Allowed values are: `ubuntu-*`, `windows-*`, `macos-*`
+      build-config:
+        required: true
+        type: string
+        description: |
+          The type of build to produce. Allowed values are: `debug`, `release`
+      library-type:
+        required: true
+        type: string
+        description: |
+          The type of library to build. Allowed values are: `static`, `dynamic`
+    outputs:
+      artifact-id:
+        description: The ID of the artifact containing the built GLFW files.
+        value: ${{jobs.build_glfw.outputs.artifact-id}}
+      artifact-name:
+        description: The name of the artifact containing the built GLFW files.
+        value: ${{jobs.build_glfw.outputs.artifact-name}}
+jobs:
+  build_glfw:
+    name: Build GLFW
+    runs-on: ${{inputs.build-os}}
+    outputs:
+      artifact-id: ${{steps.upload-artifacts.outputs.artifact-id}}
+      artifact-name: ${{steps.set-outputs.outputs.artifact-name}}
+    permissions:
+      contents: read
+    steps:
+      - id: checkout-glfw-repository
+        name: Checkout GLFW repository
+        uses: actions/checkout@v4
+        with:
+          repository: glfw/glfw
+          ref: '3.3.9'
+      - id: install-linux-build-dependencies
+        name: Install Linux build dependencies
+        if: startsWith(inputs.build-os, 'ubuntu')
+        run: |
+          sudo apt-get update && sudo apt-get install -y --no-install-recommends \
+            libegl1-mesa-dev libvulkan-dev libwayland-dev libx11-dev \
+            libxrandr-dev
+      - id: configure
+        name: Configure
+        run: |
+          cmake -S ${{github.workspace}} -B ${{github.workspace}}/build \
+            -DCMAKE_BUILD_TYPE=${{(inputs.build-config == 'debug' && 'Debug') || 'Release'}} \
+            -DBUILD_SHARED_LIBS=${{(inputs.library-type == 'static' && 'OFF') || 'ON'}} \
+            -DCMAKE_INSTALL_PREFIX=${{github.workspace}}/dist \
+            -DGLFW_BUILD_TESTS=OFF -DGLFW_BUILD_EXAMPLES=OFF \
+            -DGLFW_BUILD_DOCS=OFF -DGLFW_INSTALL=ON
+      - id: build
+        name: Build
+        run: |
+          cmake --build ${{github.workspace}}/build --config ${{(inputs.build-config == 'debug' && 'Debug') || 'Release'}}
+      - id: install
+        name: Install
+        run: |
+          cmake --install ${{github.workspace}}/build --config ${{(inputs.build-config == 'debug' && 'Debug') || 'Release'}}
+      - id: upload-artifacts
+        name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: glfw-${{inputs.build-os}}-${{inputs.library-type}}-${{inputs.build-config}}
+          path: ${{github.workspace}}/dist
+          if-no-files-found: error
+          compression-level: 9
+      - id: set-outputs
+        name: Set outputs
+        run: echo "artifact-name=glfw-${{inputs.build-os}}-${{inputs.library-type}}-${{inputs.build-config}}" >> $GITHUB_OUTPUT
