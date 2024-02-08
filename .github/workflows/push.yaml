@@ -160,4 +160,6 @@ jobs:
         run: npm run build:native:debug
       - id: test
         name: Test
+        env:
+          npm_config_glfw: ${{github.workspace}}/glfw-built
         run: npm run test:ci
