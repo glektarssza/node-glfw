@@ -1,20 +1,7 @@
 {
-    "conditions": [
-        ["OS == 'win'",
-            {
-                "variables": {
-                    "glfw_libname%":"glfw3",
-                }
-            },
-            {
-                "variables": {
-                    "glfw_libname%":"glfw3",
-                }
-            }
-        ]
-    ],
     "variables": {
         "glfw%":"internal",
+        "glfw_libname%":"glfw3",
         "module_name": "node_glfw",
     },
     "targets": [
