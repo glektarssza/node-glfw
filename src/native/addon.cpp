@@ -6,8 +6,8 @@
  */
 
 //-- NodeJS
-#include <node/node.h>
-#include <node/node_api.h>
+#include <node.h>
+#include <node_api.h>
 
 namespace node_glfw {
     void helloWorld(const v8::FunctionCallbackInfo<v8::Value>& info) {
