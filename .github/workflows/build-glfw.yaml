@@ -39,7 +39,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           repository: glfw/glfw
-          ref: '3.3.9'
+          ref: "3.3.9"
       - id: install-linux-build-dependencies
         name: Install Linux build dependencies
         if: startsWith(inputs.build-os, 'ubuntu')
@@ -67,6 +67,11 @@ jobs:
           path: ${{github.workspace}}/dist
           if-no-files-found: error
           compression-level: 9
-      - id: set-outputs
-        name: Set outputs
+      - id: set-outputs-windows
+        name: Set outputs on Windows
+        if: startsWith(inputs.build-os, 'windows') == true
+        run: echo "artifact-name=glfw-${{inputs.build-os}}-${{inputs.library-type}}-${{inputs.build-config}}" >> $env:GITHUB_OUTPUT
+      - id: set-outputs-non-window
+        name: Set outputs on non-Windows
+        if: startsWith(inputs.build-os , 'windows') == false
         run: echo "artifact-name=glfw-${{inputs.build-os}}-${{inputs.library-type}}-${{inputs.build-config}}" >> $GITHUB_OUTPUT
