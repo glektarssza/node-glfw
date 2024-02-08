@@ -13,18 +13,11 @@ jobs:
     name: Setup
     permissions:
       contents: read
-    strategy:
-      fail-fast: true
-      matrix:
-        build-os:
-          - ubuntu-latest
-          - windows-latest
-          - macos-latest
     uses: ./.github/workflows/build-glfw.yaml
     with:
       build-config: release
       library-type: static
-      build-os: ${{matrix.build-os}}
+      build-os: ubuntu-latest
   analyze:
     name: Analyze with CodeQL
     permissions:
