@@ -50,12 +50,7 @@ jobs:
       - id: configure
         name: Configure
         run: |
-          cmake -S ${{github.workspace}} -B ${{github.workspace}}/build \
-            -DCMAKE_BUILD_TYPE=${{(inputs.build-config == 'debug' && 'Debug') || 'Release'}} \
-            -DBUILD_SHARED_LIBS=${{(inputs.library-type == 'static' && 'OFF') || 'ON'}} \
-            -DCMAKE_INSTALL_PREFIX=${{github.workspace}}/dist \
-            -DGLFW_BUILD_TESTS=OFF -DGLFW_BUILD_EXAMPLES=OFF \
-            -DGLFW_BUILD_DOCS=OFF -DGLFW_INSTALL=ON
+          cmake -S ${{github.workspace}} -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{(inputs.build-config == 'debug' && 'Debug') || 'Release'}} -DBUILD_SHARED_LIBS=${{(inputs.library-type == 'static' && 'OFF') || 'ON'}} -DCMAKE_INSTALL_PREFIX=${{github.workspace}}/dist -DGLFW_BUILD_TESTS=OFF -DGLFW_BUILD_EXAMPLES=OFF -DGLFW_BUILD_DOCS=OFF -DGLFW_INSTALL=ON
       - id: build
         name: Build
         run: |
