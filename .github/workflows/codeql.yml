@@ -64,6 +64,8 @@ jobs:
         run: npm install
       - id: build
         name: Build
+        env:
+          npm_config_glfw: ${{github.workspace}}/glfw-built
         run: npm run build
       - id: perform-analysis
         name: Perform CodeQL analysis
