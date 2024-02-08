@@ -30,7 +30,7 @@ jobs:
     runs-on: ${{inputs.build-os}}
     outputs:
       artifact-id: ${{steps.upload-artifacts.outputs.artifact-id}}
-      artifact-name: ${{steps.set-outputs.outputs.artifact-name}}
+      artifact-name: ${{(startsWith(inputs.build-os, 'windows') && steps.set-outputs-windows.outputs.artifact-name}) || steps.set-outputs-non-windows.outputs.artifact-name}}
     permissions:
       contents: read
     steps:
