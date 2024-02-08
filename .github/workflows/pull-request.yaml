@@ -92,7 +92,7 @@ jobs:
         name: Download GLFW build
         uses: actions/download-artifact@v4
         with:
-          name: ${{needs[matrix.build_os].outputs.artifact-name}}
+          name: ${{needs[format('setup-{0}', matrix.build_os)].outputs.artifact-name}}
           path: ${{github.workspace}}/glfw-built
       - id: setup-nodejs
         name: Setup NodeJS
@@ -135,7 +135,7 @@ jobs:
         name: Download GLFW build
         uses: actions/download-artifact@v4
         with:
-          name: ${{needs[matrix.build_os].outputs.artifact-name}}
+          name: ${{needs[format('setup-{0}', matrix.build_os)].outputs.artifact-name}}
           path: ${{github.workspace}}/glfw-built
       - id: setup-nodejs
         name: Setup NodeJS
