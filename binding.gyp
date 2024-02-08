@@ -1,7 +1,20 @@
 {
+    "conditions": [
+        ["OS == 'win'",
+            {
+                "variables": {
+                    "glfw_libname%":"glfw",
+                }
+            },
+            {
+                "variables": {
+                    "glfw_libname%":"glfw3",
+                }
+            }
+        ]
+    ],
     "variables": {
         "glfw%":"internal",
-        "glfw_libname%":"glfw",
         "module_name": "node_glfw",
     },
     "targets": [
@@ -30,19 +43,8 @@
                         "dependencies": [
                             "deps/glfw.gyp:glfw"
                         ],
-                        "conditions": [
-                            ["OS == 'linux'",
-                                {
-                                    "libraries+": [
-                                        "-lglfw3"
-                                    ]
-                                },
-                                {
-                                    "libraries+": [
-                                        "-lglfw"
-                                    ]
-                                }
-                            ]
+                        "libraries": [
+                            "-l<(glfw_libname)"
                         ]
                     },
                     {
