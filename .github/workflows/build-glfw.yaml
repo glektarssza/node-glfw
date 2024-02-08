@@ -46,7 +46,7 @@ jobs:
         run: |
           sudo apt-get update && sudo apt-get install -y --no-install-recommends \
             libegl1-mesa-dev libvulkan-dev libwayland-dev libx11-dev \
-            libxrandr-dev libxinerama-dev libxcursor-dev
+            libxrandr-dev libxinerama-dev libxcursor-dev libxi-dev
       - id: configure
         name: Configure
         run: |
