@@ -72,7 +72,7 @@ jobs:
         if: startsWith(inputs.build-os, 'windows') == true
         run: |
           "artifact-name=glfw-${{inputs.build-os}}-${{inputs.library-type}}-${{inputs.build-config}}" | Out-File -FilePath $env:GITHUB_OUTPUT -Append
-      - id: set-outputs-non-window
+      - id: set-outputs-non-windows
         name: Set outputs on non-Windows
         if: startsWith(inputs.build-os , 'windows') == false
         run: echo "artifact-name=glfw-${{inputs.build-os}}-${{inputs.library-type}}-${{inputs.build-config}}" >> $GITHUB_OUTPUT
