@@ -16,6 +16,9 @@ jobs:
         uses: actions/checkout@v4
         with:
           submodules: true
+      - id: install-linux-dependencies
+        name: Install Linux dependencies
+        run: sudo apt-get update && sudo apt-get install -y --no-install-recommends libglfw3-dev
       - id: setup-nodejs
         name: Setup NodeJS
         uses: actions/setup-node@v4
@@ -47,6 +50,10 @@ jobs:
         uses: actions/checkout@v4
         with:
           submodules: true
+      - id: install-linux-dependencies
+        name: Install Linux dependencies
+        if: matrix.build_os == 'ubuntu-latest'
+        run: sudo apt-get update && sudo apt-get install -y --no-install-recommends libglfw3-dev
       - id: setup-nodejs
         name: Setup NodeJS
         uses: actions/setup-node@v4
@@ -78,6 +85,10 @@ jobs:
         uses: actions/checkout@v4
         with:
           submodules: true
+      - id: install-linux-dependencies
+        name: Install Linux dependencies
+        if: matrix.build_os == 'ubuntu-latest'
+        run: sudo apt-get update && sudo apt-get install -y --no-install-recommends libglfw3-dev
       - id: setup-nodejs
         name: Setup NodeJS
         uses: actions/setup-node@v4

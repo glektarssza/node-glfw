@@ -27,6 +27,9 @@ jobs:
       - id: checkout-repository
         name: Checkout repository
         uses: actions/checkout@v4
+      - id: install-linux-dependencies
+        name: Install Linux dependencies
+        run: sudo apt-get update && sudo apt-get install -y --no-install-recommends libglfw3-dev
       - id: init-codeql
         name: Initialize CodeQL
         uses: github/codeql-action/init@v3
