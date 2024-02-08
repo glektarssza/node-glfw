@@ -17,6 +17,9 @@
         "type": "git",
         "url": "https://github.com/glektarssza/node-glfw"
     },
+    "main": "./lib/index.js",
+    "module": "./lib/index.js",
+    "types": "./types/index.d.ts",
     "scripts": {
         "prepare": "husky",
         "lint": "npm run lint:eslint && npm run lint:clang-format",
@@ -38,8 +41,8 @@
         "prepublishOnly": "npm run rebuild",
         "build": "npm run build:all",
         "build:all": "npm run build:lib && npm run build:types && npm run build:native",
-        "build:lib": "tsc --project ./src/tsconfig.json",
-        "build:types": "npm run build:lib -- --declaration --emitDeclarationOnly --declarationDir ./types/",
+        "build:lib": "tsc --project ./src/ts/tsconfig.json --outDir ./lib/",
+        "build:types": "tsc --project ./src/ts/tsconfig.json --declaration --emitDeclarationOnly --declarationDir ./types/",
         "build:native": "npm run build:native:release",
         "prebuild:native:base": "node-gyp configure",
         "build:native:base": "node-gyp build",
@@ -82,8 +85,7 @@
         "node-gyp": "^10.0.1",
         "nyc": "^15.1.0",
         "sinon": "^17.0.1",
-        "ts-node": "^10.9.2",
-        "tsconfig-paths": "^4.2.0",
+        "tsx": "^4.7.0",
         "typescript": "^5.3.3"
     }
 }

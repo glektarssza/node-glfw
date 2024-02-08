@@ -1,7 +1,7 @@
 {
     "variables": {
-        "glfw%":"",
-        "glfw_libname%":"glfw",
+        "glfw%":"internal",
+        "glfw_libname%":"glfw3",
         "module_name": "node_glfw",
     },
     "targets": [
@@ -24,24 +24,38 @@
                     ]
                 }
             },
-            "include_dirs": [
-                "<(glfw)/include"
-            ],
-            "libraries": [
-                "-l<(glfw_libname)"
-            ],
             "conditions": [
-                [ "OS == 'linux'",
+                ["'<(glfw)' == 'internal'",
                     {
-                        "libraries+": [
-                            "-Wl,-rpath=<@(glfw)/lib"
+                        "dependencies": [
+                            "deps/glfw.gyp:glfw"
+                        ],
+                        "libraries": [
+                            "-l<(glfw_libname)"
                         ]
-                    }
-                ],
-                [ "OS != 'win'",
+                    },
                     {
-                        "libraries+": [
-                            "-L<@(glfw)/lib"
+                        "include_dirs": [
+                            "<(glfw)/include"
+                        ],
+                        "libraries": [
+                            "-l<(glfw_libname)"
+                        ],
+                        "conditions": [
+                            ["OS == 'linux'",
+                                {
+                                    "libraries+": [
+                                        "-Wl,-rpath=<@(glfw)/lib"
+                                    ]
+                                }
+                            ],
+                            ["OS != 'win'",
+                                {
+                                    "libraries+": [
+                                        "-L<@(glfw)/lib"
+                                    ]
+                                }
+                            ]
                         ]
                     }
                 ]

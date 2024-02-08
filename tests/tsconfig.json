@@ -4,7 +4,7 @@
         "baseUrl": ".",
         "paths": {
             "@src": [
-                "../src/ts"
+                "../src/ts/index"
             ],
             "@src/*": [
                 "../src/ts/*"

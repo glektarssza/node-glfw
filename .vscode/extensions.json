@@ -2,6 +2,7 @@
     "recommendations": [
         "dbaeumer.vscode-eslint",
         "rvest.vs-code-prettier-eslint",
+        "ms-vscode.cpptools",
         "github.remotehub",
         "github.vscode-pull-request-github",
         "github.vscode-github-actions"

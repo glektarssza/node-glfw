@@ -17,6 +17,7 @@ ERROR_ON_NO_FILES="true"
 CLANG_FORMAT_OPTS=("--dry-run")
 SOURCE_FILES=()
 INPUT_FILES=()
+PLATFORM=$(uname)
 while [[ -n "$OPT" ]]; do
     case "$OPT" in
         --help|-h)
@@ -61,7 +62,11 @@ fi
 
 for INPUT_FILE in $INPUT_FILES; do
     IFS=" "
-    SOURCE_FILES+=( $(find -E "$INPUT_FILE" -type f \( -iregex ".*(cpp|cxx|cc|c|hpp|hxx|h)\$" \) | xargs) )
+    if [[ "$PLATFORM" == 'Darwin' ]]; then
+        SOURCE_FILES+=( $(find -E "$INPUT_FILE" -type f \( -iregex ".*(cpp|cxx|cc|c|hpp|hxx|h)\$" \) | xargs) )
+    else
+        SOURCE_FILES+=( $(find "$INPUT_FILE" -regextype posix-extended -type f \( -iregex ".*(cpp|cxx|cc|c|hpp|hxx|h)\$" \) | xargs) )
+    fi
     unset IFS
 done
 
