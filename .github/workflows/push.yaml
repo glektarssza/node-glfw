@@ -110,6 +110,8 @@ jobs:
         run: npm install
       - id: build
         name: Build
+        env:
+          npm_config_glfw: ${{github.workspace}}/glfw-built
         run: npm run build
   test:
     name: Test
@@ -153,6 +155,8 @@ jobs:
         run: npm install
       - id: build-native-addon
         name: Build naive addon
+        env:
+          npm_config_glfw: ${{github.workspace}}/glfw-built
         run: npm run build:native:debug
       - id: test
         name: Test
