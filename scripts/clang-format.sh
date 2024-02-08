@@ -65,7 +65,7 @@ for INPUT_FILE in $INPUT_FILES; do
     if [[ "$PLATFORM" == 'Darwin' ]]; then
         SOURCE_FILES+=( $(find -E "$INPUT_FILE" -type f \( -iregex ".*(cpp|cxx|cc|c|hpp|hxx|h)\$" \) | xargs) )
     else
-        SOURCE_FILES+=( $(find -regextype posix-extended "$INPUT_FILE" -type f \( -iregex ".*(cpp|cxx|cc|c|hpp|hxx|h)\$" \) | xargs) )
+        SOURCE_FILES+=( $(find "$INPUT_FILE" -regextype posix-extended -type f \( -iregex ".*(cpp|cxx|cc|c|hpp|hxx|h)\$" \) | xargs) )
     fi
     unset IFS
 done
