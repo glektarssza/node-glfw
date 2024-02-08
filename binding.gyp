@@ -3,7 +3,7 @@
         ["OS == 'win'",
             {
                 "variables": {
-                    "glfw_libname%":"glfw",
+                    "glfw_libname%":"glfw3",
                 }
             },
             {
